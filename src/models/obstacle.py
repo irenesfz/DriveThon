@@ -3,12 +3,12 @@ import random
 from src.constants import SCREEN_WIDTH, SCREEN_HEIGHT, OBSTACLE_WIDTH, OBSTACLE_HEIGHT, OBSTACLE_MIN_SPEED, OBSTACLE_MAX_SPEED
 
 class Obstacle:
-    def __init__(self):
+    def __init__(self, x, y):
         self.image = pygame.image.load("obstacle.png").convert_alpha()
         self.width = OBSTACLE_WIDTH
         self.height = OBSTACLE_HEIGHT
-        self.x = random.randint(0, SCREEN_WIDTH - self.width)
-        self.y = -self.height
+        self.x = x
+        self.y = y
         self.vel = random.randint(OBSTACLE_MIN_SPEED, OBSTACLE_MAX_SPEED)
 
     def update(self):
