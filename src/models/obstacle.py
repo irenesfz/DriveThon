@@ -10,15 +10,17 @@ class Obstacle:
         self.x = x
         self.y = y
         self.vel = random.randint(OBSTACLE_MIN_SPEED, OBSTACLE_MAX_SPEED)
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def update(self):
         self.y += self.vel
+        self.rect.y = self.y
 
     def off_screen(self):
         return self.y > SCREEN_HEIGHT
 
     def collision(self, car):
-        return car.x < self.x + self.width and car.x + car.width > self.x and car.y < self.y + self.height and car.y + car.height > self.y
+        return self.rect.colliderect(car.rect)
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))

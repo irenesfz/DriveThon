@@ -1,46 +1,66 @@
 import pygame
-from src.constants import SCREEN_WIDTH, SCREEN_HEIGHT, CAR_WIDTH, CAR_HEIGHT, CAR_START_X, CAR_START_Y
+from src.constants import SCREEN_WIDTH, SCREEN_HEIGHT
+
 
 class Car:
-    def __init__(self):
-        self.image = pygame.image.load("car.png")
-        self.width = CAR_WIDTH
-        self.height = CAR_HEIGHT
-        self.x = CAR_START_X
-        self.y = CAR_START_Y
-        self.vel = 0
-        self.max_vel = 10
-        self.acceleration = 0.2
-        self.friction = 0.1
+    def __init__(self, x, y, width, height, speed):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.speed = speed
+        self.image = pygame.image.load("car.gif").convert_alpha()
+
+        self.move_up_pressed = False
+        self.move_down_pressed = False
+        self.move_left_pressed = False
+        self.move_right_pressed = False
+
+    def move_up(self):
+        self.y -= self.speed
+
+    def move_down(self):
+        self.y += self.speed
+
+    def move_left(self):
+        self.x -= self.speed
+
+    def move_right(self):
+        self.x += self.speed
+
+    def stop_x(self):
+        self.move_left_pressed = False
+        self.move_right_pressed = False
+
+    def stop_y(self):
+        self.move_up_pressed = False
+        self.move_down_pressed = False
 
     def update(self):
-        self.handle_keys()
-        self.move()
+        if self.move_up_pressed:
+            self.move_up()
+        elif self.move_down_pressed:
+            self.move_down()
 
-    def handle_keys(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.vel -= self.acceleration
-        elif keys[pygame.K_RIGHT]:
-            self.vel += self.acceleration
-        else:
-            if self.vel > 0:
-                self.vel -= self.friction
-            elif self.vel < 0:
-                self.vel += self.friction
-        if self.vel > self.max_vel:
-            self.vel = self.max_vel
-        elif self.vel < -self.max_vel:
-            self.vel = -self.max_vel
-
-    def move(self):
-        self.x += self.vel
-        if self.x > SCREEN_WIDTH - self.width:
-            self.x = SCREEN_WIDTH - self.width
-            self.vel = 0
-        elif self.x < 0:
-            self.x = 0
-            self.vel = 0
+        if self.move_left_pressed:
+            self.move_left()
+        elif self.move_right_pressed:
+            self.move_right()
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
+
+    def collides_with(self, obstacle):
+        car_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        obstacle_rect = pygame.Rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height)
+        return car_rect.colliderect(obstacle_rect)
+
+    def move(self, dx, dy):
+        self.x += dx
+        self.y += dy
+
+    def stop_x(self):
+        self.speed = 0
+
+    def stop_y(self):
+        self.acceleration = 0
