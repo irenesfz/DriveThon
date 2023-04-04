@@ -1,0 +1,8 @@
+bash
+pygame.display.flip()
+
+# Set the game's framerate
+clock.tick(60)
+
+# Quit Pygame
+pygame.quit()
