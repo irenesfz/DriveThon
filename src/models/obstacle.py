@@ -19,8 +19,8 @@ class Obstacle:
     def off_screen(self):
         return self.y > SCREEN_HEIGHT
 
-    def collision(self, car):
-        return self.rect.colliderect(car.rect)
+    def collision(self, peepo):
+        return self.rect.colliderect(peepo.rect)
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))

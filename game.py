@@ -1,5 +1,5 @@
-# Create the car
-car = Car()
+# Create the peepo
+peepo = Peepo()
 
 # Create the obstacles
 obstacles = []
@@ -14,22 +14,22 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                car.move_left()
+                peepo.move_left()
             if event.key == pygame.K_RIGHT:
-                car.move_right()
+                peepo.move_right()
     
     # Update the game state
     for obstacle in obstacles:
         obstacle.update()
         if obstacle.off_screen():
             obstacles.remove(obstacle)
-        if obstacle.collision(car):
+        if obstacle.collision(peepo):
             running = False
     if len(obstacles) < 5:
         obstacles.append(Obstacle())
     
     # Draw the game
     screen.fill((255, 255, 255))
-    car.draw()
+    peepo.draw()
     for obstacle in obstacles:
         obstacle.draw()

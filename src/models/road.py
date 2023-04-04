@@ -3,7 +3,7 @@ from src.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Road:
     def __init__(self):
-        self.image = pygame.image.load("road.png").convert()
+        self.image = None #pygame.image.load("road.png").convert()
         self.y = 0
         self.speed = 5
 

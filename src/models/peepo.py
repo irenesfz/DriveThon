@@ -2,7 +2,7 @@ import pygame
 from src.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
-class Car:
+class Peepo:
     def __init__(self, x, y, width, height, speed):
         self.x = x
         self.y = y
@@ -51,9 +51,10 @@ class Car:
         screen.blit(self.image, (self.x, self.y))
 
     def collides_with(self, obstacle):
-        car_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.image = pygame.image.load("peepo2.png").convert_alpha()
+        peepo_rect = pygame.Rect(self.x, self.y, self.width, self.height)
         obstacle_rect = pygame.Rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height)
-        return car_rect.colliderect(obstacle_rect)
+        return peepo_rect.colliderect(obstacle_rect)
 
     def move(self, dx, dy):
         self.x += dx
@@ -64,3 +65,5 @@ class Car:
 
     def stop_y(self):
         self.acceleration = 0
+
+        
